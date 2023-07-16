@@ -40,18 +40,22 @@ function PostForm() {
     dispatch(createPost(data)).then(() => reset());
   };
 
-  const handleDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
 
-    if (file) {
-      setValue(
-        "image",
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-    }
-  });
+      if (file) {
+        setValue(
+          "image",
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      }
+    },
+    [setValue]
+  );
+
   return (
     <Card sx={{ p: 3 }}>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

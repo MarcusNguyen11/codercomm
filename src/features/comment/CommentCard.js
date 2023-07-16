@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Avatar,
   Box,
   Button,
-  Divider,
-  Icon,
   IconButton,
-  Menu,
-  MenuItem,
   Paper,
   Stack,
   Typography,
@@ -23,7 +19,7 @@ function CommentCard({ comment }) {
   const { user } = useAuth();
 
   const handleDeleteComment = () => {
-    const choice = window.confirm("Bạn có muốn xóa comment này không");
+    const choice = window.confirm("Do you want to delete this comment ???");
     if (choice === true) {
       if (user._id === comment.author._id)
         dispatch(deleteComment({ commentId: comment._id }));

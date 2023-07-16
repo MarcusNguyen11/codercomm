@@ -12,8 +12,6 @@ import {
   MenuItem,
   Divider,
   alpha,
-  TextField,
-  Button,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link as RouterLink } from "react-router-dom";
@@ -48,7 +46,7 @@ function PostCard({ post }) {
     setAnchorEl(null);
   };
   const handleDeletePost = () => {
-    const choice = window.confirm("Bạn có muốn xóa Post này không");
+    const choice = window.confirm("Do you want to delete this Post ???");
     if (choice === true) {
       if (user._id === post.author._id)
         dispatch(deletePost({ postId: post._id }));
@@ -84,18 +82,21 @@ function PostCard({ post }) {
     formState: { isSubmitting },
   } = methods;
 
-  const handleDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
 
-    if (file) {
-      setValue(
-        "image",
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-    }
-  });
+      if (file) {
+        setValue(
+          "image",
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      }
+    },
+    [setValue]
+  );
   const renderOptionPost = (
     <Menu
       id="menu-appbar"
