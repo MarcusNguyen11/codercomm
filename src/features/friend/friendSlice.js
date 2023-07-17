@@ -89,13 +89,15 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
       const { users, count, totalPages } = action.payload;
+      console.log(action.payload);
       users.forEach((user) => (state.usersById[user._id] = user));
       state.currentPageUsers = users.map((user) => user._id);
       state.totalUsers = count;
       state.totalPages = totalPages;
-      state.currentPageUsers = state.currentPageUsers.filter(
-        (user) => user !== user._id
-      );
+      // const userId = action.payload.users._id;
+      // state.currentPageUsers = state.currentPageUsers.filter(
+      //   (user) => user !== userId
+      // );
     },
   },
 });
@@ -175,7 +177,7 @@ export const cancelRequest = (targetUserId, page) => async (dispatch) => {
       slice.actions.cancelRequestSuccess({ ...reponse.data, targetUserId })
     );
     toast.success("Request cancelled");
-    dispatch(getRequestsSend({ page }));
+    // dispatch(getRequestsSend({ page }));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);

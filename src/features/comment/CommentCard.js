@@ -13,7 +13,6 @@ import CommentReaction from "./CommentReaction";
 import { deleteComment } from "./commentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-import { toast } from "react-toastify";
 function CommentCard({ comment, postId }) {
   const dispatch = useDispatch();
 
@@ -33,8 +32,6 @@ function CommentCard({ comment, postId }) {
             currentPage,
           })
         );
-      } else {
-        toast.error("You can't delete other people's comment");
       }
     }
   };
@@ -60,9 +57,13 @@ function CommentCard({ comment, postId }) {
             <Typography variant="caption" sx={{ color: "text.disables" }}>
               {fDate(comment.createdAt)}
             </Typography>
-            <IconButton onClick={handleDeleteComment}>
-              <Button>Delete</Button>
-            </IconButton>
+            {user._id === comment.author._id ? (
+              <IconButton onClick={handleDeleteComment}>
+                <Button>Delete</Button>
+              </IconButton>
+            ) : (
+              <Typography/>
+            )}
           </Stack>
         </Stack>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>

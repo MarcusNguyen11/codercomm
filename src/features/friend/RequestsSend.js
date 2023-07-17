@@ -17,9 +17,8 @@ function RequestsSend() {
   const [filterName, setFilterName] = useState("");
   const [page, setPage] = useState(1);
 
-  const { currentPageUsers, usersById, totalUsers, totalPages } = useSelector(
-    (state) => state.friend
-  );
+  const { currentPageUsers, usersById, totalUsers, totalPages } =
+    useSelector((state) => state.friend);
   const users = currentPageUsers.map((userId) => usersById[userId]);
   const dispatch = useDispatch();
   useEffect(() => {
