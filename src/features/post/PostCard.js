@@ -31,7 +31,7 @@ import { LoadingButton } from "@mui/lab";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-
+import { toast } from "react-toastify";
 function PostCard({ post }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
@@ -48,12 +48,19 @@ function PostCard({ post }) {
   const handleDeletePost = () => {
     const choice = window.confirm("Do you want to delete this Post ???");
     if (choice === true) {
-      if (user._id === post.author._id)
+      if (user._id === post.author._id) {
         dispatch(deletePost({ postId: post._id }));
+      } else {
+        toast.error("You can't delete other people's Post");
+      }
     }
   };
   const handleEdit = () => {
-    setEdit(true);
+    if (user._id === post.author._id) {
+      setEdit(true);
+    } else {
+      toast.error("You can't edit other people's Post");
+    }
   };
 
   const onSubmit = (data) => {
@@ -121,7 +128,6 @@ function PostCard({ post }) {
           noWrap
         ></Typography>
       </Box>
-
       <Divider sx={{ borderStyle: "dashed" }} />
       <IconButton onClick={handleProfileMenuClose}>
         <MenuItem onClick={handleDeletePost} sx={{ mx: 1 }}>

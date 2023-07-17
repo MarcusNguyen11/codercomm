@@ -11,18 +11,31 @@ import {
 import { fDate } from "../../ultils/formatTime";
 import CommentReaction from "./CommentReaction";
 import { deleteComment } from "./commentSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useAuth from "../../hooks/useAuth";
-
-function CommentCard({ comment }) {
+import { toast } from "react-toastify";
+function CommentCard({ comment, postId }) {
   const dispatch = useDispatch();
+
   const { user } = useAuth();
+  const { currentPage } = useSelector((state) => ({
+    currentPage: state.comment.currentPageByPost[postId] || 1,
+  }));
 
   const handleDeleteComment = () => {
     const choice = window.confirm("Do you want to delete this comment ???");
     if (choice === true) {
-      if (user._id === comment.author._id)
-        dispatch(deleteComment({ commentId: comment._id }));
+      if (user._id === comment.author._id) {
+        dispatch(
+          deleteComment({
+            commentId: comment._id,
+            postId,
+            currentPage,
+          })
+        );
+      } else {
+        toast.error("You can't delete other people's comment");
+      }
     }
   };
   return (

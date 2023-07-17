@@ -12,7 +12,7 @@ function CommentList({ postId }) {
     commentsById,
     totalComments,
     isLoading,
-    currrentPage,
+    currentPage,
   } = useSelector(
     (state) => ({
       commentsByPost: state.comment.commentsByPost[postId],
@@ -23,6 +23,8 @@ function CommentList({ postId }) {
     }),
     shallowEqual
   );
+ 
+
   const toltalPages = Math.ceil(totalComments / COMMENTS_PER_POST);
 
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ function CommentList({ postId }) {
     renderComment = (
       <Stack spacing={1.5}>
         {comments?.map((comment) => (
-          <CommentCard key={comment._id} comment={comment} />
+          <CommentCard key={comment._id} comment={comment} postId = {postId} />
         ))}
       </Stack>
     );
@@ -56,7 +58,7 @@ function CommentList({ postId }) {
         {totalComments > COMMENTS_PER_POST && (
           <Pagination
             count={toltalPages}
-            page={currrentPage}
+            page={currentPage}
             onChange={(e, page) => dispatch(getComments({ postId, page }))}
           />
         )}
